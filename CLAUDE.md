@@ -27,13 +27,26 @@ Design decisions worth preserving:
   generic welcome. The lede immediately explains that this is chapter one of seven, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
   purpose. Don't "fix" the repetition.
-- **The chapter spine** is seven stacked 4:1 banners of Acts2's own illustrations, each
-  with a number and that week's question overlaid — nothing else. The official chapter
-  titles ("A Good Thing Gone Bad" and so on) were deliberately dropped from the overlay;
-  the page shows the same seven questions as the business card and nothing more.
-  Numbering is meaningful because the course is a progression; it isn't decoration. The
-  images run green dawn → red → gold → night → desert → cliff → sunrise, which tracks
-  the course's own arc, so keep them in order.
+- **The two controls are not the same kind of thing.** "Sign up for 2026" is an `<a>`
+  that leaves the page. "Explore the course" is a `<button>` that opens the chapters in
+  place — hence `button.link`, which resets UA button styling so it sits flush with its
+  sibling card, and the chevron rather than the outbound arrow. The `.link:hover svg`
+  rule is scoped `:not(.link__chevron)` so the arrow's nudge doesn't fight the chevron's
+  rotation.
+- **The chapters live inside the links `<nav>`**, not in a section of their own, so they
+  open directly under the control that reveals them. Each is a link to
+  `course101.online/chapter-N/en` (the `/en` suffix is the English variant; the site has
+  eight). There is no "seven weeks, seven chapters" heading — the disclosure's own label
+  does that job.
+- **Each chapter banner** is 4:1, Acts2's illustration with a number and that week's
+  question overlaid — nothing else. The official chapter titles ("A Good Thing Gone Bad"
+  and so on) were deliberately dropped. Numbering is meaningful because the course is a
+  progression; it isn't decoration. The images run green dawn → red → gold → night →
+  desert → cliff → sunrise, tracking the course's own arc, so keep them in order.
+- **Each chapter link carries an explicit `aria-label`** ("Chapter 1: What is life
+  really about?"). Without it the accessible name comes out as `1What is life really
+  about?` — the number and question are separate flex items, so they concatenate with no
+  space. Keep the label in sync with the visible question if you change one.
 - **`.chapter__text` carries a dark scrim, and its colours are literal, not tokens.**
   The seven illustrations range from near-white (ch5, ch6) to near-black (ch4), so
   overlaid text cannot trust the art underneath; the scrim is dark in both themes, which

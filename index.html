@@ -185,9 +185,25 @@
 
   .link--secondary .link__meta { color: var(--ink-soft); }
 
+  /* The explore control is a button, not a link — it opens the chapters in
+     place rather than navigating away. Reset the UA button styling so it
+     sits flush with its sibling card. */
+  button.link {
+    width: 100%;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  .link__chevron { transition: transform 0.22s ease; }
+
+  .link[aria-expanded="true"] .link__chevron { transform: rotate(180deg); }
+
   @media (hover: hover) {
     .link:hover { transform: translateY(-2px); }
-    .link:hover svg { transform: translate(2px, -2px); }
+    .link:hover svg:not(.link__chevron) { transform: translate(2px, -2px); }
     .link--primary:hover { background: var(--indigo-lift); border-color: var(--indigo-lift); }
     .link--secondary:hover { border-color: var(--indigo); }
   }
@@ -199,20 +215,11 @@
     outline-offset: 3px;
   }
 
-  /* ---- Chapter spine ----------------------------------------- */
+  /* ---- Chapters ---------------------------------------------- */
 
-  .spine { margin-top: clamp(3rem, 10vh, 4.5rem); }
+  .chapters[hidden] { display: none; }
 
-  .spine__label {
-    margin: 0 0 0.75rem;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-  }
-
-  .spine ol {
+  .chapters ol {
     display: grid;
     gap: 0.75rem;
     margin: 0;
@@ -221,11 +228,14 @@
     counter-reset: chapter;
   }
 
-  .spine li {
-    counter-increment: chapter;
+  .chapters li { counter-increment: chapter; }
+
+  .chapter {
+    display: block;
     position: relative;
     border-radius: 0.5rem;
     overflow: hidden;
+    text-decoration: none;
   }
 
   /* Acts2's own chapter illustrations, re-cut to 4:1. min-height keeps the
@@ -239,6 +249,11 @@
     min-height: 6.25rem;
     object-fit: cover;
     background: var(--paper-lift);
+    transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.3, 1);
+  }
+
+  @media (hover: hover) {
+    .chapter:hover .chapter__art { transform: scale(1.035); }
   }
 
   /* The seven illustrations run from near-white to near-black, so overlaid
@@ -425,16 +440,85 @@
       </svg>
     </a>
 
-    <a class="link link--secondary" href="https://www.course101.online/">
+    <button class="link link--secondary" type="button"
+            aria-expanded="false" aria-controls="chapters">
       <span>
-        <span class="link__title">Read the course</span>
-        <span class="link__meta">course101.online · 8 languages</span>
+        <span class="link__title">Explore the course</span>
+        <span class="link__meta">Seven chapters · course101.online</span>
       </span>
-      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
-        <path d="M5 13 13 5M13 5H6.5M13 5v6.5" stroke="currentColor" stroke-width="1.6"
+      <svg class="link__chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M4.5 7 9 11.5 13.5 7" stroke="currentColor" stroke-width="1.6"
               stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
-    </a>
+    </button>
+
+    <div class="chapters" id="chapters" hidden>
+      <ol>
+        <li>
+          <a class="chapter" href="https://www.course101.online/chapter-1/en"
+             aria-label="Chapter 1: What is life really about?">
+            <img class="chapter__art" src="images/ch1.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
+            <span class="chapter__text">
+              <span class="chapter__q"><span class="chapter__num">1</span><span>What is life really about?</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="chapter" href="https://www.course101.online/chapter-2/en"
+             aria-label="Chapter 2: Why is the world so broken?">
+            <img class="chapter__art" src="images/ch2.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
+            <span class="chapter__text">
+              <span class="chapter__q"><span class="chapter__num">2</span><span>Why is the world so broken?</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="chapter" href="https://www.course101.online/chapter-3/en"
+             aria-label="Chapter 3: How does God reveal himself?">
+            <img class="chapter__art" src="images/ch3.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
+            <span class="chapter__text">
+              <span class="chapter__q"><span class="chapter__num">3</span><span>How does God reveal himself?</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="chapter" href="https://www.course101.online/chapter-4/en"
+             aria-label="Chapter 4: What is sin, really?">
+            <img class="chapter__art" src="images/ch4.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
+            <span class="chapter__text">
+              <span class="chapter__q"><span class="chapter__num">4</span><span>What is sin, really?</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="chapter" href="https://www.course101.online/chapter-5/en"
+             aria-label="Chapter 5: Did Jesus really rise from the dead?">
+            <img class="chapter__art" src="images/ch5.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
+            <span class="chapter__text">
+              <span class="chapter__q"><span class="chapter__num">5</span><span>Did Jesus really rise from the dead?</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="chapter" href="https://www.course101.online/chapter-6/en"
+             aria-label="Chapter 6: What does the resurrection mean for us?">
+            <img class="chapter__art" src="images/ch6.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
+            <span class="chapter__text">
+              <span class="chapter__q"><span class="chapter__num">6</span><span>What does the resurrection mean for us?</span></span>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a class="chapter" href="https://www.course101.online/chapter-7/en"
+             aria-label="Chapter 7: Who am I, and why am I here?">
+            <img class="chapter__art" src="images/ch7.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
+            <span class="chapter__text">
+              <span class="chapter__q"><span class="chapter__num">7</span><span>Who am I, and why am I here?</span></span>
+            </span>
+          </a>
+        </li>
+      </ol>
+    </div>
   </nav>
 
   <div class="qr rise">
@@ -456,54 +540,6 @@
     </div>
   </div>
 
-  <section class="spine rise" aria-labelledby="spine-label">
-    <h2 class="spine__label" id="spine-label">Seven weeks, seven chapters</h2>
-    <ol>
-      <li>
-        <img class="chapter__art" src="images/ch1.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
-        <div class="chapter__text">
-          <p class="chapter__q"><span class="chapter__num">1</span><span>What is life really about?</span></p>
-        </div>
-      </li>
-      <li>
-        <img class="chapter__art" src="images/ch2.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
-        <div class="chapter__text">
-          <p class="chapter__q"><span class="chapter__num">2</span><span>Why is the world so broken?</span></p>
-        </div>
-      </li>
-      <li>
-        <img class="chapter__art" src="images/ch3.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
-        <div class="chapter__text">
-          <p class="chapter__q"><span class="chapter__num">3</span><span>How does God reveal himself?</span></p>
-        </div>
-      </li>
-      <li>
-        <img class="chapter__art" src="images/ch4.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
-        <div class="chapter__text">
-          <p class="chapter__q"><span class="chapter__num">4</span><span>What is sin, really?</span></p>
-        </div>
-      </li>
-      <li>
-        <img class="chapter__art" src="images/ch5.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
-        <div class="chapter__text">
-          <p class="chapter__q"><span class="chapter__num">5</span><span>Did Jesus really rise from the dead?</span></p>
-        </div>
-      </li>
-      <li>
-        <img class="chapter__art" src="images/ch6.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
-        <div class="chapter__text">
-          <p class="chapter__q"><span class="chapter__num">6</span><span>What does the resurrection mean for us?</span></p>
-        </div>
-      </li>
-      <li>
-        <img class="chapter__art" src="images/ch7.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
-        <div class="chapter__text">
-          <p class="chapter__q"><span class="chapter__num">7</span><span>Who am I, and why am I here?</span></p>
-        </div>
-      </li>
-    </ol>
-  </section>
-
   <footer class="rise">
     <a href="https://www.rootedchurchatlanta.org/">rootedchurchatlanta.org</a>
     <span aria-hidden="true">·</span>
@@ -511,6 +547,23 @@
   </footer>
 
 </main>
+
+<script>
+/* Explore-the-course disclosure. The chapters live inside the links nav so
+   they open in place, directly under the control that reveals them. */
+(function () {
+  "use strict";
+  var toggle = document.querySelector('[aria-controls="chapters"]');
+  var panel = document.getElementById("chapters");
+  if (!toggle || !panel) return;
+
+  toggle.addEventListener("click", function () {
+    var open = toggle.getAttribute("aria-expanded") === "true";
+    toggle.setAttribute("aria-expanded", String(!open));
+    panel.hidden = open;
+  });
+})();
+</script>
 
 <script>
 /* QR encoder — byte mode, EC level M, versions 1–10. Self-contained on purpose:
