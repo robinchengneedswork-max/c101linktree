@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course 101 — Atlanta</title>
+<meta name="description" content="A 7-week course on the intellectual foundations of Christianity, and a room to ask the questions out loud. Sign up for the 2026 Atlanta cohort.">
+<meta name="theme-color" content="#EDF0F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0D1030" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Course 101 — Atlanta">
+<meta property="og:description" content="Seven weeks on the intellectual foundations of Christianity. Sign up for 2026, or read the course first.">
+<meta name="twitter:card" content="summary">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23101436'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='21' font-weight='600' fill='%23E39A1F' text-anchor='middle'%3E%3F%3C/text%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300..600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --paper:     #EDF0F7;
+    --paper-lift:#FFFFFF;
+    --ink:       #101436;
+    --ink-soft:  #565E86;
+    --indigo:    #3B34A6;
+    --indigo-lift:#4B43C4;
+    --saffron:   #E39A1F;
+    --rule:      #CBD2E4;
+
+    --measure: 34rem;
+    --step: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:     #0D1030;
+      --paper-lift:#161A40;
+      --ink:       #E8EBF7;
+      --ink-soft:  #9BA3C8;
+      --indigo:    #8F87F5;
+      --indigo-lift:#A49DFF;
+      --saffron:   #F0B44A;
+      --rule:      #2A2F5C;
+    }
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 1rem;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    display: flex;
+    justify-content: center;
+  }
+
+  main {
+    width: 100%;
+    max-width: var(--measure);
+    padding: clamp(3rem, 11vh, 6.5rem) var(--step) 3rem;
+  }
+
+  /* ---- Hero -------------------------------------------------- */
+
+  .eyebrow {
+    margin: 0 0 clamp(1.75rem, 6vh, 3rem);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .eyebrow span { color: var(--saffron); }
+
+  .question {
+    margin: 0;
+    font-family: Newsreader, Georgia, "Times New Roman", serif;
+    font-size: clamp(3.25rem, 17vw, 5.75rem);
+    font-weight: 300;
+    line-height: 0.94;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  .question .mark {
+    color: var(--saffron);
+    font-size: 1.15em;
+    line-height: 0;
+    vertical-align: -0.06em;
+  }
+
+  .lede {
+    margin: clamp(1.25rem, 4vh, 1.75rem) 0 clamp(2rem, 7vh, 3rem);
+    max-width: 27rem;
+    color: var(--ink-soft);
+    font-size: 1.0625rem;
+  }
+
+  .lede strong { color: var(--ink); font-weight: 500; }
+
+  /* ---- Links ------------------------------------------------- */
+
+  .links { display: grid; gap: 0.75rem; }
+
+  .link {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.25rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    transition: transform 0.18s ease, background-color 0.18s ease,
+                border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+
+  .link__title {
+    display: block;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+
+  .link__meta {
+    display: block;
+    margin-top: 0.1rem;
+    font-size: 0.8125rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .link svg {
+    flex: none;
+    transition: transform 0.18s ease;
+  }
+
+  .link--primary {
+    background: var(--indigo);
+    border: 1px solid var(--indigo);
+    color: #FFFFFF;
+    box-shadow: 0 1px 2px rgb(16 20 54 / 0.16), 0 8px 22px -12px rgb(59 52 166 / 0.55);
+  }
+
+  .link--primary .link__meta { color: rgb(255 255 255 / 0.72); }
+
+  .link--secondary {
+    background: var(--paper-lift);
+    border: 1px solid var(--rule);
+    color: var(--ink);
+  }
+
+  .link--secondary .link__meta { color: var(--ink-soft); }
+
+  @media (hover: hover) {
+    .link:hover { transform: translateY(-2px); }
+    .link:hover svg { transform: translate(2px, -2px); }
+    .link--primary:hover { background: var(--indigo-lift); border-color: var(--indigo-lift); }
+    .link--secondary:hover { border-color: var(--indigo); }
+  }
+
+  .link:active { transform: translateY(0); }
+
+  :focus-visible {
+    outline: 2px solid var(--saffron);
+    outline-offset: 3px;
+  }
+
+  /* ---- Chapter spine ----------------------------------------- */
+
+  .spine { margin-top: clamp(3rem, 10vh, 4.5rem); }
+
+  .spine__label {
+    margin: 0 0 0.75rem;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .spine ol {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    counter-reset: chapter;
+  }
+
+  .spine li {
+    counter-increment: chapter;
+    display: grid;
+    grid-template-columns: 1.75rem 1fr;
+    gap: 0.5rem;
+    padding: 0.6rem 0;
+    border-top: 1px solid var(--rule);
+    font-size: 0.9375rem;
+  }
+
+  .spine li:last-child { border-bottom: 1px solid var(--rule); }
+
+  .spine li::before {
+    content: counter(chapter);
+    font-family: Newsreader, Georgia, serif;
+    font-size: 1rem;
+    color: var(--saffron);
+    font-variant-numeric: tabular-nums;
+  }
+
+  footer {
+    margin-top: 2.25rem;
+    color: var(--ink-soft);
+    font-size: 0.8125rem;
+  }
+
+  footer a { color: inherit; text-underline-offset: 3px; }
+
+  /* ---- Load sequence ----------------------------------------- */
+
+  .rise {
+    animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.3, 1) backwards;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(0.6rem); }
+    to   { opacity: 1; transform: none; }
+  }
+
+  .rise:nth-child(1) { animation-delay: 0.00s; }
+  .rise:nth-child(2) { animation-delay: 0.07s; }
+  .rise:nth-child(3) { animation-delay: 0.14s; }
+  .rise:nth-child(4) { animation-delay: 0.21s; }
+  .rise:nth-child(5) { animation-delay: 0.30s; }
+  .rise:nth-child(6) { animation-delay: 0.38s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<main>
+
+  <p class="eyebrow rise">Acts2 Network <span>·</span> Atlanta</p>
+
+  <h1 class="question rise">What is life<span class="mark">?</span></h1>
+
+  <p class="lede rise">
+    That's chapter one of seven. Course 101 is a <strong>7-week course</strong> on the
+    intellectual foundations of Christianity — and a room to ask the questions out loud,
+    whether you've believed for years or you're just curious.
+  </p>
+
+  <nav class="links rise" aria-label="Course 101 links">
+    <a class="link link--primary"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSdgwGnQRZzWpSR50Xjtir-RRnQx0Bf0zUkC5NmaLdPluyERkg/viewform">
+      <span>
+        <span class="link__title">Sign up for 2026</span>
+        <span class="link__meta">Atlanta cohort · takes a minute</span>
+      </span>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M5 13 13 5M13 5H6.5M13 5v6.5" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+
+    <a class="link link--secondary" href="https://www.course101.online/">
+      <span>
+        <span class="link__title">Read the course</span>
+        <span class="link__meta">course101.online · 8 languages</span>
+      </span>
+      <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+        <path d="M5 13 13 5M13 5H6.5M13 5v6.5" stroke="currentColor" stroke-width="1.6"
+              stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </a>
+  </nav>
+
+  <section class="spine rise" aria-labelledby="spine-label">
+    <h2 class="spine__label" id="spine-label">Seven weeks, seven chapters</h2>
+    <ol>
+      <li><span>What is Life?</span></li>
+      <li><span>A Good Thing Gone Bad</span></li>
+      <li><span>God's Revelation</span></li>
+      <li><span>Our Problem</span></li>
+      <li><span>Death and Resurrection of Jesus</span></li>
+      <li><span>Our Response</span></li>
+      <li><span>New Life of Love</span></li>
+    </ol>
+  </section>
+
+  <footer class="rise">
+    Questions before you sign up? Ask through the contact form at
+    <a href="https://www.course101.online/">course101.online</a>.
+  </footer>
+
+</main>
+</body>
+</html>
