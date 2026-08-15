@@ -89,6 +89,11 @@ These were read off the live sites, not invented, and should be re-checked befor
 changing them: the seven chapter titles and the "8 languages" claim come from
 course101.online; the form is titled "2026 Course 101 Sign-Up".
 
+Do **not** point people to the contact form on course101.online. Rooted Church does not
+run that site and cannot see what arrives there, so questions sent that way go
+unanswered. A "questions before you sign up?" line was removed for this reason; if one
+comes back it must use a Rooted-controlled address.
+
 The local host is **Rooted Church** (rootedchurchatlanta.org), which describes itself as
 "Part of Acts2 College, Acts2 Network, Send Network, & Southern Baptist Convention" and
 serves students at Georgia Tech, Emory, UGA, and KSU. The page uses "Rooted Church"
