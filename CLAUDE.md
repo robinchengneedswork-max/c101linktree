@@ -20,9 +20,20 @@ that way unless a second page is genuinely needed — the deploy story depends o
 
 Design decisions worth preserving:
 
-- **The masthead sets "C101" in Anton**, which is the same face the printed business
-  cards use for that wordmark and the display face on rootedchurchatlanta.org. It is a
-  logo lockup, so keep it small — the hero question is the thing meant to be read first.
+- **The masthead sets "C101" in Anton**, the same face the printed business cards use
+  for that wordmark and the display face on rootedchurchatlanta.org. It links to
+  course101.online. Its `clamp(1.6rem, 5vw, 2.1rem)` ceiling is deliberate: big enough
+  to read as a mark, but the hero question must stay the first thing anyone reads. **Do
+  not let the wordmark grow into the headline** — a page that opens with a question
+  instead of a logo is the whole reason this doesn't look like every other link-in-bio.
+- **The masthead reads `C101 • ATLANTA 2026`.** The year is the highest-value thing in
+  the header: without it nobody scanning a card can tell a current page from a stale
+  one. The org name is deliberately absent — the footer carries
+  `rootedchurchatlanta.org · @rootedchurchatlanta`, so the header spends itself on what
+  is unique to this page rather than repeating the host. If it needs to come back,
+  `C101 • ROOTED CHURCH · ATLANTA 2026` still fits at 430px.
+- **The divider is a saffron dot, not a rule.** It echoes the hero's `?` and is the one
+  spot of brand colour in the lockup.
 - **The hero is the course's first chapter title, "What is life?"** — not a logo or a
   generic welcome. The lede immediately explains that this is chapter one of seven, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
@@ -66,6 +77,25 @@ Design decisions worth preserving:
   Adding, removing, or reordering a top-level block shifts every delay after it.
 - `@media (prefers-reduced-motion: reduce)` kills all animation and transition. Any new
   motion must stay inside that guard.
+
+## The sticky sign-up bar
+
+`.stickybar` carries the CTA back into reach once the hero has scrolled away. With the
+chapters open, the real sign-up button ends up well over a thousand pixels above someone
+who has just read the seventh question — the point at which they are most likely to act.
+
+- **`position: fixed`, not `sticky`.** A sticky element occupies flow and would also show
+  at the top of the page. This must stay out of the way until the hero leaves.
+- **It toggles `visibility`, not just `transform`.** Transform alone would leave the two
+  links focusable while off-screen, so keyboard users would tab into an invisible bar.
+- An `IntersectionObserver` on `.question` drives it. The reveal transition is cancelled
+  by the global `prefers-reduced-motion` rule, which leaves it appearing instantly rather
+  than sliding — that is the intended reduced-motion behaviour, not a bug.
+
+**Debugging note:** IntersectionObserver callbacks are delivered during the rendering
+step, which Chrome suspends for a backgrounded or occluded tab. Driving the page purely
+through CDP will show the observer never firing and the bar never appearing, even though
+both work. Force a paint (take a screenshot) before concluding it is broken.
 
 ## The QR code
 

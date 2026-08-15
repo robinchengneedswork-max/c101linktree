@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Course 101 — Atlanta</title>
+<title>Course 101 — Atlanta 2026</title>
 <meta name="description" content="A 7-week course on the intellectual foundations of Christianity, and a room to ask the questions out loud. Sign up for the 2026 Atlanta cohort.">
 <meta name="theme-color" content="#EDF0F7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0D1030" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Course 101 — Atlanta">
+<meta property="og:title" content="Course 101 — Atlanta 2026">
 <meta property="og:description" content="Seven weeks on the intellectual foundations of Christianity. Sign up for 2026, or read the course first.">
 <meta name="twitter:card" content="summary">
 
@@ -23,6 +23,7 @@
   :root {
     --paper:     #EDF0F7;
     --paper-lift:#FFFFFF;
+    --paper-veil:rgb(237 240 247 / 0.86);
     --ink:       #101436;
     --ink-soft:  #565E86;
     --indigo:    #3B34A6;
@@ -38,6 +39,7 @@
     :root {
       --paper:     #0D1030;
       --paper-lift:#161A40;
+      --paper-veil:rgb(13 16 48 / 0.86);
       --ink:       #E8EBF7;
       --ink-soft:  #9BA3C8;
       --indigo:    #8F87F5;
@@ -70,6 +72,69 @@
     padding: clamp(3rem, 11vh, 6.5rem) var(--step) 3rem;
   }
 
+  /* ---- Sticky CTA -------------------------------------------- */
+
+  /* Fixed rather than sticky: a sticky element would occupy flow and show at
+     the top of the page too. This must stay out of the way until the hero has
+     scrolled off, then carry the sign-up back into reach — by the seventh
+     chapter banner the real button is well over a thousand pixels up.
+     visibility (not just transform) keeps the links out of the tab order
+     while hidden. */
+  .stickybar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 0.55rem var(--step);
+    background: var(--paper-veil);
+    -webkit-backdrop-filter: blur(12px) saturate(1.5);
+    backdrop-filter: blur(12px) saturate(1.5);
+    border-bottom: 1px solid var(--rule);
+    transform: translateY(-100%);
+    visibility: hidden;
+    transition: transform 0.28s cubic-bezier(0.2, 0.7, 0.3, 1), visibility 0.28s;
+  }
+
+  .stickybar.is-visible {
+    transform: none;
+    visibility: visible;
+  }
+
+  .stickybar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    max-width: var(--measure);
+    margin: 0 auto;
+  }
+
+  .stickybar__mark {
+    font-family: Anton, "Arial Narrow", Impact, sans-serif;
+    font-size: 1.15rem;
+    line-height: 1;
+    color: var(--ink);
+    text-decoration: none;
+  }
+
+  .stickybar__cta {
+    padding: 0.45rem 0.85rem;
+    border-radius: 0.5rem;
+    background: var(--indigo);
+    color: #FFFFFF;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.18s ease;
+  }
+
+  @media (hover: hover) {
+    .stickybar__cta:hover { background: var(--indigo-lift); }
+  }
+
   /* ---- Hero -------------------------------------------------- */
 
   /* Masthead: the C101 wordmark from the printed cards, locked up with the
@@ -81,19 +146,28 @@
     margin: 0 0 clamp(1.75rem, 6vh, 3rem);
   }
 
+  /* Big enough to read as a mark rather than a caption, but deliberately far
+     below the hero — the first thing you read on this page is a question, not
+     a logo. Don't let this grow into the headline. */
   .wordmark {
     font-family: Anton, "Arial Narrow", Impact, sans-serif;
-    font-size: 1.45rem;
+    font-size: clamp(1.6rem, 5vw, 2.1rem);
     line-height: 1;
     letter-spacing: 0.005em;
     color: var(--ink);
+    text-decoration: none;
   }
 
-  .masthead__rule {
+  @media (hover: hover) {
+    .wordmark:hover { color: var(--indigo); }
+  }
+
+  .masthead__dot {
     flex: none;
-    width: 1px;
-    height: 1.05rem;
-    background: var(--rule);
+    width: 0.3rem;
+    height: 0.3rem;
+    border-radius: 50%;
+    background: var(--saffron);
   }
 
   .eyebrow {
@@ -411,12 +485,21 @@
 </style>
 </head>
 <body>
+
+<div class="stickybar" aria-label="Course 101 Atlanta 2026">
+  <div class="stickybar__inner">
+    <a class="stickybar__mark" href="https://www.course101.online/">C101</a>
+    <a class="stickybar__cta"
+       href="https://docs.google.com/forms/d/e/1FAIpQLSdgwGnQRZzWpSR50Xjtir-RRnQx0Bf0zUkC5NmaLdPluyERkg/viewform">Sign up for 2026</a>
+  </div>
+</div>
+
 <main>
 
   <header class="masthead rise">
-    <span class="wordmark">C101</span>
-    <span class="masthead__rule" aria-hidden="true"></span>
-    <p class="eyebrow">Rooted Church <span>·</span> Atlanta</p>
+    <a class="wordmark" href="https://www.course101.online/">C101</a>
+    <span class="masthead__dot" aria-hidden="true"></span>
+    <p class="eyebrow">Atlanta 2026</p>
   </header>
 
   <h1 class="question rise">What is life<span class="mark">?</span></h1>
@@ -547,6 +630,23 @@
   </footer>
 
 </main>
+
+<script>
+/* Sticky sign-up bar. Revealed once the hero question has scrolled out of
+   view, so the CTA is reachable from the bottom of the chapter list. The
+   reveal transition is cancelled by the global prefers-reduced-motion rule,
+   which leaves it appearing instantly rather than sliding. */
+(function () {
+  "use strict";
+  var bar = document.querySelector(".stickybar");
+  var hero = document.querySelector(".question");
+  if (!bar || !hero || !("IntersectionObserver" in window)) return;
+
+  new IntersectionObserver(function (entries) {
+    bar.classList.toggle("is-visible", !entries[0].isIntersecting);
+  }, { threshold: 0 }).observe(hero);
+})();
+</script>
 
 <script>
 /* Explore-the-course disclosure. The chapters live inside the links nav so
