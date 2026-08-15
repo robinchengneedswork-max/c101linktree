@@ -27,11 +27,20 @@ Design decisions worth preserving:
   generic welcome. The lede immediately explains that this is chapter one of seven, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
   purpose. Don't "fix" the repetition.
-- **The chapter spine** is seven stacked rows, each one a label (number + official
-  chapter title), the week's question, and a 3:1 banner of Acts2's own illustration.
+- **The chapter spine** is seven stacked 3:1 banners of Acts2's own illustrations, with
+  the label (number + official chapter title) and the week's question overlaid on each.
   Numbering is meaningful because the course is a progression; it isn't decoration. The
   images run green dawn → red → gold → night → desert → cliff → sunrise, which tracks
   the course's own arc, so keep them in order.
+- **`.chapter__text` carries a dark scrim, and its colours are literal, not tokens.**
+  The seven illustrations range from near-white (ch5, ch6) to near-black (ch4), so
+  overlaid text cannot trust the art underneath; the scrim is dark in both themes, which
+  is why the text is `#FFFFFF` and the number `#F0B44A` rather than `var(--ink)` and
+  `var(--saffron)`. Weakening the gradient breaks legibility on the pale chapters.
+- **`.chapter__art` has both `aspect-ratio: 3/1` and `min-height: 8.5rem`.** The
+  min-height is what stops overlaid text from crowding once the column is narrow — below
+  about 408px the ratio alone would give a shorter box than the text needs. Verified at a
+  381px content width: rows land at 136px, text needs 73px, every question on one line.
 - **Every question on the page is set in Newsreader** — the hero and all seven chapter
   questions. That is the rule: a question looks like a question. Chapter titles and
   labels stay in Instrument Sans. Don't set a new question in the sans.

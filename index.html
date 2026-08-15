@@ -214,25 +214,58 @@
 
   .spine ol {
     display: grid;
-    gap: 1.85rem;
+    gap: 0.75rem;
     margin: 0;
     padding: 0;
     list-style: none;
     counter-reset: chapter;
   }
 
-  .spine li { counter-increment: chapter; }
+  .spine li {
+    counter-increment: chapter;
+    position: relative;
+    border-radius: 0.5rem;
+    overflow: hidden;
+  }
+
+  /* Acts2's own chapter illustrations, re-cut to 3:1. min-height keeps two
+     lines of overlaid text from crowding once the column gets narrow. */
+  .chapter__art {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 1;
+    min-height: 8.5rem;
+    object-fit: cover;
+    background: var(--paper-lift);
+  }
+
+  /* The seven illustrations run from near-white to near-black, so overlaid
+     text gets its own ground instead of trusting the art underneath. The
+     scrim is dark in both themes — hence the literal colours below. */
+  .chapter__text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 0.9rem 1.05rem;
+    background: linear-gradient(to top,
+      rgb(16 20 54 / 0.84) 0%,
+      rgb(16 20 54 / 0.58) 45%,
+      rgb(16 20 54 / 0.04) 100%);
+  }
 
   .chapter__label {
     display: flex;
     align-items: baseline;
     gap: 0.5rem;
-    margin: 0;
+    margin: 0 0 0.15rem;
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--ink-soft);
+    color: rgb(255 255 255 / 0.78);
   }
 
   .chapter__num {
@@ -240,33 +273,21 @@
     font-size: 0.875rem;
     font-weight: 400;
     letter-spacing: 0;
-    color: var(--saffron);
+    color: #F0B44A;
     font-variant-numeric: tabular-nums;
   }
 
   /* Every question on this page is set in the serif — the hero and all seven
      chapters share one voice, so a question always looks like a question. */
   .chapter__q {
-    margin: 0.3rem 0 0.75rem;
+    margin: 0;
     font-family: Newsreader, Georgia, serif;
-    font-size: 1.375rem;
+    font-size: clamp(1.05rem, 3.7vw, 1.375rem);
     font-weight: 400;
-    line-height: 1.2;
+    line-height: 1.18;
     letter-spacing: -0.01em;
-    color: var(--ink);
+    color: #FFFFFF;
     text-wrap: balance;
-  }
-
-  /* Acts2's own chapter illustrations, re-cut to 3:1. Flattened onto white
-     when converted, so the banners read the same in light and dark. */
-  .chapter__art {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 3 / 1;
-    object-fit: cover;
-    border-radius: 0.5rem;
-    background: var(--paper-lift);
   }
 
   footer {
@@ -440,39 +461,53 @@
     <h2 class="spine__label" id="spine-label">Seven weeks, seven chapters</h2>
     <ol>
       <li>
-        <p class="chapter__label"><span class="chapter__num">1</span> What is Life?</p>
-        <p class="chapter__q">What is life really about?</p>
         <img class="chapter__art" src="images/ch1.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
+        <div class="chapter__text">
+          <p class="chapter__label"><span class="chapter__num">1</span> What is Life?</p>
+          <p class="chapter__q">What is life really about?</p>
+        </div>
       </li>
       <li>
-        <p class="chapter__label"><span class="chapter__num">2</span> A Good Thing Gone Bad</p>
-        <p class="chapter__q">Why is the world so broken?</p>
         <img class="chapter__art" src="images/ch2.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
+        <div class="chapter__text">
+          <p class="chapter__label"><span class="chapter__num">2</span> A Good Thing Gone Bad</p>
+          <p class="chapter__q">Why is the world so broken?</p>
+        </div>
       </li>
       <li>
-        <p class="chapter__label"><span class="chapter__num">3</span> God's Revelation</p>
-        <p class="chapter__q">How does God reveal himself?</p>
         <img class="chapter__art" src="images/ch3.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
+        <div class="chapter__text">
+          <p class="chapter__label"><span class="chapter__num">3</span> God's Revelation</p>
+          <p class="chapter__q">How does God reveal himself?</p>
+        </div>
       </li>
       <li>
-        <p class="chapter__label"><span class="chapter__num">4</span> Our Problem</p>
-        <p class="chapter__q">What is sin, really?</p>
         <img class="chapter__art" src="images/ch4.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
+        <div class="chapter__text">
+          <p class="chapter__label"><span class="chapter__num">4</span> Our Problem</p>
+          <p class="chapter__q">What is sin, really?</p>
+        </div>
       </li>
       <li>
-        <p class="chapter__label"><span class="chapter__num">5</span> Death and Resurrection of Jesus</p>
-        <p class="chapter__q">Did Jesus really rise from the dead?</p>
         <img class="chapter__art" src="images/ch5.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
+        <div class="chapter__text">
+          <p class="chapter__label"><span class="chapter__num">5</span> Death and Resurrection of Jesus</p>
+          <p class="chapter__q">Did Jesus really rise from the dead?</p>
+        </div>
       </li>
       <li>
-        <p class="chapter__label"><span class="chapter__num">6</span> Our Response</p>
-        <p class="chapter__q">What does the resurrection mean for us?</p>
         <img class="chapter__art" src="images/ch6.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
+        <div class="chapter__text">
+          <p class="chapter__label"><span class="chapter__num">6</span> Our Response</p>
+          <p class="chapter__q">What does the resurrection mean for us?</p>
+        </div>
       </li>
       <li>
-        <p class="chapter__label"><span class="chapter__num">7</span> New Life of Love</p>
-        <p class="chapter__q">Who am I, and why am I here?</p>
         <img class="chapter__art" src="images/ch7.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
+        <div class="chapter__text">
+          <p class="chapter__label"><span class="chapter__num">7</span> New Life of Love</p>
+          <p class="chapter__q">Who am I, and why am I here?</p>
+        </div>
       </li>
     </ol>
   </section>
