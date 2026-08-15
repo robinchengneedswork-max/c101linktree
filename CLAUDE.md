@@ -27,8 +27,10 @@ Design decisions worth preserving:
   generic welcome. The lede immediately explains that this is chapter one of seven, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
   purpose. Don't "fix" the repetition.
-- **The chapter spine** lists all seven real chapter titles. Numbering is meaningful
-  here because the course is a progression; it isn't decoration.
+- **The chapter spine** shows all seven real chapters as a grid of Acts2's own
+  illustrations. Numbering is meaningful here because the course is a progression; it
+  isn't decoration. The images run teal dawn → red → dark → sunrise across the seven,
+  which tracks the course's own arc — keep them in order.
 - Colors and spacing come from CSS custom properties on `:root`, with a dark variant
   under `@media (prefers-color-scheme: dark)`. Change a color by editing the token, not
   the rule that uses it. Saffron (`--saffron`) is reserved for the hero "?", the chapter
@@ -62,6 +64,20 @@ RGBA and decode it with the `jsqr` npm package, asserting the text comes back
 unchanged. Note that comparing against another encoder's matrix is a *weaker* test —
 implementations legitimately disagree on mask selection when penalty scores tie, and
 any valid mask scans fine.
+
+## Chapter images
+
+`images/ch1.webp` … `ch7.webp` are Acts2's chapter illustrations, pulled from the
+Webflow CDN behind course101.online and self-hosted here so the page does not depend on
+their bandwidth or file paths. **Reuse was confirmed with the user**, who is part of the
+Acts2 network.
+
+They were normalised on the way in: square `cover` crop (the originals run 0.95–1.67
+aspect), 400×400, WebP q78, and flattened onto white because several had alpha. That
+took the set from 811KB to 51KB. To regenerate after replacing a source file, the
+recipe is `sharp(src).resize(400, 400, {fit:'cover'}).flatten({background:'#FFFFFF'})
+.webp({quality:78})` — and SVG sources need `{density: 300}` on input or they rasterize
+soft.
 
 ## Palette provenance
 

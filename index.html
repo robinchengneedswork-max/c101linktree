@@ -213,30 +213,50 @@
   }
 
   .spine ol {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
+    gap: 1rem 0.75rem;
     margin: 0;
     padding: 0;
     list-style: none;
     counter-reset: chapter;
   }
 
-  .spine li {
-    counter-increment: chapter;
-    display: grid;
-    grid-template-columns: 1.75rem 1fr;
-    gap: 0.5rem;
-    padding: 0.6rem 0;
-    border-top: 1px solid var(--rule);
-    font-size: 0.9375rem;
+  .spine li { counter-increment: chapter; }
+
+  /* Acts2's own chapter illustrations. Flattened onto white when they were
+     converted, so the tiles read the same in light and dark. */
+  .spine img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    background: var(--paper-lift);
   }
 
-  .spine li:last-child { border-bottom: 1px solid var(--rule); }
+  .spine__meta {
+    display: grid;
+    grid-template-columns: 0.9rem 1fr;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+  }
 
-  .spine li::before {
+  .spine__meta::before {
     content: counter(chapter);
     font-family: Newsreader, Georgia, serif;
-    font-size: 1rem;
+    font-size: 0.9375rem;
+    line-height: 1.25;
     color: var(--saffron);
     font-variant-numeric: tabular-nums;
+  }
+
+  .spine__title {
+    font-size: 0.8125rem;
+    line-height: 1.25;
+    color: var(--ink);
+    text-wrap: balance;
   }
 
   footer {
@@ -409,13 +429,34 @@
   <section class="spine rise" aria-labelledby="spine-label">
     <h2 class="spine__label" id="spine-label">Seven weeks, seven chapters</h2>
     <ol>
-      <li><span>What is Life?</span></li>
-      <li><span>A Good Thing Gone Bad</span></li>
-      <li><span>God's Revelation</span></li>
-      <li><span>Our Problem</span></li>
-      <li><span>Death and Resurrection of Jesus</span></li>
-      <li><span>Our Response</span></li>
-      <li><span>New Life of Love</span></li>
+      <li>
+        <img src="images/ch1.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
+        <span class="spine__meta"><span class="spine__title">What is Life?</span></span>
+      </li>
+      <li>
+        <img src="images/ch2.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
+        <span class="spine__meta"><span class="spine__title">A Good Thing Gone Bad</span></span>
+      </li>
+      <li>
+        <img src="images/ch3.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
+        <span class="spine__meta"><span class="spine__title">God's Revelation</span></span>
+      </li>
+      <li>
+        <img src="images/ch4.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
+        <span class="spine__meta"><span class="spine__title">Our Problem</span></span>
+      </li>
+      <li>
+        <img src="images/ch5.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
+        <span class="spine__meta"><span class="spine__title">Death and Resurrection of Jesus</span></span>
+      </li>
+      <li>
+        <img src="images/ch6.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
+        <span class="spine__meta"><span class="spine__title">Our Response</span></span>
+      </li>
+      <li>
+        <img src="images/ch7.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
+        <span class="spine__meta"><span class="spine__title">New Life of Love</span></span>
+      </li>
     </ol>
   </section>
 
