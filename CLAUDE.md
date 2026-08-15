@@ -35,6 +35,31 @@ Design decisions worth preserving:
 - `@media (prefers-reduced-motion: reduce)` kills all animation and transition. Any new
   motion must stay inside that guard.
 
+## The QR code
+
+The page generates a QR code for its own production URL, for whoever is making a
+flyer. The encoder is written out in the `<script>` at the bottom of `index.html`
+rather than pulled from a CDN, so the page keeps working behind networks that block
+third-party hosts. It covers byte mode, EC level M, versions 1–10 — enough for any
+URL up to 216 bytes.
+
+- **`SHARE_URL` is deliberately not `location.href`.** Codes generated from a Vercel
+  preview deployment or from localhost must still point at production. If the domain
+  changes, that constant and the `.qr__url` text are the two places to update.
+- The QR panel hard-codes white/`#101436` instead of using the theme tokens. Do not
+  "fix" this to respect dark mode — scanners need the light-on-dark polarity that QR
+  specifies, and an inverted code fails on many phone cameras.
+- A 4-module quiet zone is painted into the canvas itself, so the downloaded PNG is
+  valid standalone rather than relying on the page's white card for margin.
+
+**If you touch the encoder, re-verify it.** Correctness here is not eyeballable — a
+subtly wrong matrix still looks like a QR code. The check that caught a transposed
+format-bit placement during development was a round-trip: render the matrix to raw
+RGBA and decode it with the `jsqr` npm package, asserting the text comes back
+unchanged. Note that comparing against another encoder's matrix is a *weaker* test —
+implementations legitimately disagree on mask selection when penalty scores tie, and
+any valid mask scans fine.
+
 ## Commands
 
 Preview (no build):
@@ -62,6 +87,10 @@ together so the label still describes where the button goes.
 
 These were read off the live sites, not invented, and should be re-checked before
 changing them: the seven chapter titles and the "8 languages" claim come from
-course101.online; the form is titled "2026 Course 101 Sign-Up". **"Atlanta" was inferred
-from the folder name `c101_ATL`** and has not been confirmed against a source — verify
-it before printing flyers.
+course101.online; the form is titled "2026 Course 101 Sign-Up".
+
+The local host is **Rooted Church** (rootedchurchatlanta.org), which describes itself as
+"Part of Acts2 College, Acts2 Network, Send Network, & Southern Baptist Convention" and
+serves students at Georgia Tech, Emory, UGA, and KSU. The page uses "Rooted Church"
+because that is how the church writes its own name; the user referred to it as "Rooted
+Christian Fellowship," so confirm which name this cohort should carry.

@@ -221,7 +221,78 @@
     font-size: 0.8125rem;
   }
 
+  footer p { margin: 0 0 0.35rem; }
+  footer p:last-child { margin: 0; }
   footer a { color: inherit; text-underline-offset: 3px; }
+
+  /* ---- QR code ----------------------------------------------- */
+
+  .qr { margin-top: 1.25rem; }
+
+  .qr__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 0;
+    border: 0;
+    background: none;
+    color: var(--ink-soft);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 0.25rem;
+    transition: color 0.18s ease;
+  }
+
+  @media (hover: hover) {
+    .qr__toggle:hover { color: var(--indigo); }
+  }
+
+  .qr__panel {
+    margin-top: 0.85rem;
+    padding: 1.25rem;
+    border: 1px solid var(--rule);
+    border-radius: 0.75rem;
+    background: #FFFFFF;
+    text-align: center;
+  }
+
+  .qr__panel[hidden] { display: none; }
+
+  .qr__canvas {
+    display: block;
+    margin: 0 auto;
+    width: 216px;
+    height: 216px;
+    max-width: 100%;
+  }
+
+  .qr__url {
+    margin: 0.75rem 0 0;
+    color: #565E86;
+    font-size: 0.8125rem;
+    letter-spacing: 0.01em;
+    overflow-wrap: anywhere;
+  }
+
+  .qr__download {
+    margin-top: 0.9rem;
+    padding: 0.5rem 0.9rem;
+    border: 1px solid #CBD2E4;
+    border-radius: 0.5rem;
+    background: #FFFFFF;
+    color: #101436;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: border-color 0.18s ease;
+  }
+
+  @media (hover: hover) {
+    .qr__download:hover { border-color: #3B34A6; }
+  }
 
   /* ---- Load sequence ----------------------------------------- */
 
@@ -238,8 +309,9 @@
   .rise:nth-child(2) { animation-delay: 0.07s; }
   .rise:nth-child(3) { animation-delay: 0.14s; }
   .rise:nth-child(4) { animation-delay: 0.21s; }
-  .rise:nth-child(5) { animation-delay: 0.30s; }
-  .rise:nth-child(6) { animation-delay: 0.38s; }
+  .rise:nth-child(5) { animation-delay: 0.28s; }
+  .rise:nth-child(6) { animation-delay: 0.35s; }
+  .rise:nth-child(7) { animation-delay: 0.42s; }
 
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -252,7 +324,7 @@
 <body>
 <main>
 
-  <p class="eyebrow rise">Acts2 Network <span>·</span> Atlanta</p>
+  <p class="eyebrow rise">Rooted Church <span>·</span> Atlanta</p>
 
   <h1 class="question rise">What is life<span class="mark">?</span></h1>
 
@@ -287,6 +359,25 @@
     </a>
   </nav>
 
+  <div class="qr rise">
+    <button class="qr__toggle" type="button" aria-expanded="false" aria-controls="qr-panel">
+      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+        <rect x="0.85" y="0.85" width="4.3" height="4.3" rx="0.6" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="8.85" y="0.85" width="4.3" height="4.3" rx="0.6" stroke="currentColor" stroke-width="1.5"/>
+        <rect x="0.85" y="8.85" width="4.3" height="4.3" rx="0.6" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M8.6 8.6h2v2h-2zM11.8 11.8h1.6v1.6h-1.6z" fill="currentColor"/>
+      </svg>
+      <span data-qr-label>Show the QR code</span>
+    </button>
+
+    <div class="qr__panel" id="qr-panel" hidden>
+      <canvas class="qr__canvas" role="img"
+              aria-label="QR code linking to c101linktree.vercel.app"></canvas>
+      <p class="qr__url">c101linktree.vercel.app</p>
+      <button class="qr__download" type="button">Download PNG</button>
+    </div>
+  </div>
+
   <section class="spine rise" aria-labelledby="spine-label">
     <h2 class="spine__label" id="spine-label">Seven weeks, seven chapters</h2>
     <ol>
@@ -301,10 +392,344 @@
   </section>
 
   <footer class="rise">
-    Questions before you sign up? Ask through the contact form at
-    <a href="https://www.course101.online/">course101.online</a>.
+    <p>
+      Questions before you sign up? Ask through the contact form at
+      <a href="https://www.course101.online/">course101.online</a>.
+    </p>
+    <p>Course 101 is an Acts2 Network course. Hosted in Atlanta by Rooted Church.</p>
   </footer>
 
 </main>
+
+<script>
+/* QR encoder — byte mode, EC level M, versions 1–10. Self-contained on purpose:
+   no CDN, so the page keeps working if a network blocks third-party hosts.
+   Verified by round-tripping its output through the jsQR decoder. */
+(function () {
+  "use strict";
+
+  /* The canonical address the QR should point at. Deliberately NOT
+     location.href, so codes generated from a Vercel preview URL or from
+     localhost still send people to the production page. */
+  var SHARE_URL = "https://c101linktree.vercel.app/";
+
+  //        ecPerBlock, g1Blocks, g1Data, g2Blocks, g2Data
+  var EC = {
+    1: [10, 1, 16, 0, 0],   2: [16, 1, 28, 0, 0],   3: [26, 1, 44, 0, 0],
+    4: [18, 2, 32, 0, 0],   5: [24, 2, 43, 0, 0],   6: [16, 4, 27, 0, 0],
+    7: [18, 4, 31, 0, 0],   8: [22, 2, 38, 2, 39],  9: [22, 3, 36, 2, 37],
+    10: [26, 4, 43, 1, 44]
+  };
+  var ALIGN = {
+    1: [], 2: [6, 18], 3: [6, 22], 4: [6, 26], 5: [6, 30],
+    6: [6, 34], 7: [6, 22, 38], 8: [6, 24, 42], 9: [6, 26, 46], 10: [6, 28, 50]
+  };
+
+  // GF(256)
+  var EXP = new Uint8Array(512), LOG = new Uint8Array(256);
+  (function () {
+    var x = 1;
+    for (var i = 0; i < 255; i++) { EXP[i] = x; LOG[x] = i; x <<= 1; if (x & 0x100) x ^= 0x11d; }
+    for (var j = 255; j < 512; j++) EXP[j] = EXP[j - 255];
+  })();
+  function mul(a, b) { return (a === 0 || b === 0) ? 0 : EXP[LOG[a] + LOG[b]]; }
+
+  function genPoly(n) {
+    var g = [1];
+    for (var i = 0; i < n; i++) {
+      var next = new Array(g.length + 1);
+      for (var k = 0; k < next.length; k++) next[k] = 0;
+      for (var j = 0; j < g.length; j++) {
+        next[j] ^= g[j];
+        next[j + 1] ^= mul(g[j], EXP[i]);
+      }
+      g = next;
+    }
+    return g;
+  }
+
+  function ecc(data, n) {
+    var g = genPoly(n), res = new Uint8Array(data.length + n), i, j;
+    res.set(data);
+    for (i = 0; i < data.length; i++) {
+      var factor = res[i];
+      if (factor === 0) continue;
+      for (j = 0; j < g.length; j++) res[i + j] ^= mul(g[j], factor);
+    }
+    return Array.prototype.slice.call(res.subarray(data.length));
+  }
+
+  function pickVersion(len) {
+    for (var v = 1; v <= 10; v++) {
+      var e = EC[v];
+      var capacity = (e[1] * e[2] + e[3] * e[4]) * 8;
+      if (4 + (v < 10 ? 8 : 16) + len * 8 <= capacity) return v;
+    }
+    throw new Error("QR payload too long");
+  }
+
+  function encodeData(bytes, version) {
+    var e = EC[version], totalData = e[1] * e[2] + e[3] * e[4];
+    var bits = [], i, j;
+    function push(val, len) { for (var b = len - 1; b >= 0; b--) bits.push((val >> b) & 1); }
+
+    push(0x4, 4);
+    push(bytes.length, version < 10 ? 8 : 16);
+    for (i = 0; i < bytes.length; i++) push(bytes[i], 8);
+
+    var cap = totalData * 8;
+    for (i = 0; i < 4 && bits.length < cap; i++) bits.push(0);
+    while (bits.length % 8) bits.push(0);
+
+    var cw = [];
+    for (i = 0; i < bits.length; i += 8) {
+      var v = 0;
+      for (j = 0; j < 8; j++) v = (v << 1) | bits[i + j];
+      cw.push(v);
+    }
+    var pads = [0xEC, 0x11], k = 0;
+    while (cw.length < totalData) cw.push(pads[k++ & 1]);
+    return cw;
+  }
+
+  function interleave(dataCw, version) {
+    var e = EC[version], ecPer = e[0], blocks = [], pos = 0, i;
+    for (i = 0; i < e[1]; i++) { blocks.push(dataCw.slice(pos, pos + e[2])); pos += e[2]; }
+    for (i = 0; i < e[3]; i++) { blocks.push(dataCw.slice(pos, pos + e[4])); pos += e[4]; }
+    var ecBlocks = blocks.map(function (b) { return ecc(b, ecPer); });
+
+    var out = [], maxD = Math.max(e[2], e[4]), b;
+    for (i = 0; i < maxD; i++) for (b = 0; b < blocks.length; b++) {
+      if (i < blocks[b].length) out.push(blocks[b][i]);
+    }
+    for (i = 0; i < ecPer; i++) for (b = 0; b < ecBlocks.length; b++) out.push(ecBlocks[b][i]);
+    return out;
+  }
+
+  function formatBits(eclBits, mask) {
+    var d = (eclBits << 3) | mask, rem = d;
+    for (var i = 0; i < 10; i++) rem = (rem << 1) ^ ((rem >> 9) * 0x537);
+    return ((d << 10) | rem) ^ 0x5412;
+  }
+
+  function versionBits(v) {
+    var rem = v;
+    for (var i = 0; i < 12; i++) rem = (rem << 1) ^ ((rem >> 11) * 0x1F25);
+    return (v << 12) | rem;
+  }
+
+  var MASKS = [
+    function (r, c) { return (r + c) % 2 === 0; },
+    function (r) { return r % 2 === 0; },
+    function (r, c) { return c % 3 === 0; },
+    function (r, c) { return (r + c) % 3 === 0; },
+    function (r, c) { return (Math.floor(r / 2) + Math.floor(c / 3)) % 2 === 0; },
+    function (r, c) { return (r * c) % 2 + (r * c) % 3 === 0; },
+    function (r, c) { return (((r * c) % 2 + (r * c) % 3) % 2) === 0; },
+    function (r, c) { return (((r + c) % 2 + (r * c) % 3) % 2) === 0; }
+  ];
+
+  function functionPatterns(version) {
+    var size = version * 4 + 17, m = [], res = [], r, c;
+    for (r = 0; r < size; r++) {
+      m.push(new Array(size).fill(0));
+      res.push(new Array(size).fill(false));
+    }
+    function set(row, col, v) {
+      if (row >= 0 && row < size && col >= 0 && col < size) { m[row][col] = v; res[row][col] = true; }
+    }
+
+    function finder(r0, c0) {
+      for (var dr = -1; dr <= 7; dr++) for (var dc = -1; dc <= 7; dc++) {
+        var inside = dr >= 0 && dr <= 6 && dc >= 0 && dc <= 6;
+        var dark = inside && (dr === 0 || dr === 6 || dc === 0 || dc === 6 ||
+                              (dr >= 2 && dr <= 4 && dc >= 2 && dc <= 4));
+        set(r0 + dr, c0 + dc, dark ? 1 : 0);
+      }
+    }
+    finder(0, 0); finder(0, size - 7); finder(size - 7, 0);
+
+    for (var i = 8; i < size - 8; i++) {
+      set(6, i, i % 2 === 0 ? 1 : 0);
+      set(i, 6, i % 2 === 0 ? 1 : 0);
+    }
+
+    var centers = ALIGN[version];
+    for (var a = 0; a < centers.length; a++) for (var b = 0; b < centers.length; b++) {
+      var cr = centers[a], cc = centers[b];
+      if ((cr <= 8 && cc <= 8) || (cr <= 8 && cc >= size - 9) || (cr >= size - 9 && cc <= 8)) continue;
+      for (var dr2 = -2; dr2 <= 2; dr2++) for (var dc2 = -2; dc2 <= 2; dc2++) {
+        set(cr + dr2, cc + dc2, Math.max(Math.abs(dr2), Math.abs(dc2)) === 1 ? 0 : 1);
+      }
+    }
+
+    for (i = 0; i <= 8; i++) { res[8][i] = true; res[i][8] = true; }
+    for (i = 0; i < 8; i++) { res[8][size - 1 - i] = true; res[size - 1 - i][8] = true; }
+
+    if (version >= 7) {
+      var vb = versionBits(version);
+      for (i = 0; i < 18; i++) {
+        var bit = (vb >> i) & 1, x = Math.floor(i / 3), y = size - 11 + (i % 3);
+        set(x, y, bit); set(y, x, bit);
+      }
+    }
+
+    set(size - 8, 8, 1); // dark module
+    return { size: size, m: m, res: res };
+  }
+
+  function placeData(size, m, res, cw) {
+    var total = cw.length * 8, idx = 0, up = true;
+    function bitAt(i) { return (cw[i >> 3] >> (7 - (i & 7))) & 1; }
+    for (var col = size - 1; col > 0; col -= 2) {
+      if (col === 6) col = 5;
+      for (var i = 0; i < size; i++) {
+        var row = up ? size - 1 - i : i;
+        for (var j = 0; j < 2; j++) {
+          var c = col - j;
+          if (res[row][c]) continue;
+          m[row][c] = idx < total ? bitAt(idx) : 0;
+          idx++;
+        }
+      }
+      up = !up;
+    }
+  }
+
+  function drawFormat(size, m, bits) {
+    function bit(i) { return (bits >> i) & 1; }
+    for (var i = 0; i <= 5; i++) m[i][8] = bit(i);
+    m[7][8] = bit(6);
+    m[8][8] = bit(7);
+    m[8][7] = bit(8);
+    for (i = 9; i < 15; i++) m[8][14 - i] = bit(i);
+
+    for (i = 0; i < 8; i++) m[8][size - 1 - i] = bit(i);
+    for (i = 8; i < 15; i++) m[size - 15 + i][8] = bit(i);
+    m[size - 8][8] = 1;
+  }
+
+  function penalty(size, m) {
+    var score = 0, r, c, k, a, run, prev, v;
+
+    for (k = 0; k < 2; k++) for (a = 0; a < size; a++) {
+      run = 1; prev = k ? m[0][a] : m[a][0];
+      for (var b = 1; b < size; b++) {
+        v = k ? m[b][a] : m[a][b];
+        if (v === prev) run++;
+        else { if (run >= 5) score += 3 + (run - 5); run = 1; prev = v; }
+      }
+      if (run >= 5) score += 3 + (run - 5);
+    }
+
+    for (r = 0; r < size - 1; r++) for (c = 0; c < size - 1; c++) {
+      v = m[r][c];
+      if (v === m[r][c + 1] && v === m[r + 1][c] && v === m[r + 1][c + 1]) score += 3;
+    }
+
+    var A = [1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0], B = [0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1];
+    function match(get, start) {
+      var ma = true, mb = true;
+      for (var i = 0; i < 11; i++) {
+        var val = get(start + i);
+        if (val !== A[i]) ma = false;
+        if (val !== B[i]) mb = false;
+      }
+      return (ma ? 1 : 0) + (mb ? 1 : 0);
+    }
+    for (a = 0; a < size; a++) for (var s = 0; s + 11 <= size; s++) {
+      score += 40 * match(function (i) { return m[a][i]; }, s);
+      score += 40 * match(function (i) { return m[i][a]; }, s);
+    }
+
+    var dark = 0;
+    for (r = 0; r < size; r++) for (c = 0; c < size; c++) dark += m[r][c];
+    score += 10 * Math.floor(Math.abs((dark * 100) / (size * size) - 50) / 5);
+    return score;
+  }
+
+  function encode(text) {
+    var bytes = Array.prototype.slice.call(new TextEncoder().encode(text));
+    var version = pickVersion(bytes.length);
+    var cw = interleave(encodeData(bytes, version), version);
+
+    var best = null, bestScore = Infinity;
+    for (var mask = 0; mask < 8; mask++) {
+      var f = functionPatterns(version);
+      placeData(f.size, f.m, f.res, cw);
+      for (var r = 0; r < f.size; r++) for (var c = 0; c < f.size; c++) {
+        if (!f.res[r][c] && MASKS[mask](r, c)) f.m[r][c] ^= 1;
+      }
+      drawFormat(f.size, f.m, formatBits(0, mask));
+      var s = penalty(f.size, f.m);
+      if (s < bestScore) { bestScore = s; best = f; }
+    }
+    return best;
+  }
+
+  // ---- Rendering ------------------------------------------------
+  var QUIET = 4;
+
+  function paint(canvas, qr, scale) {
+    var mods = qr.size + QUIET * 2, px = mods * scale;
+    canvas.width = px;
+    canvas.height = px;
+    var ctx = canvas.getContext("2d");
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, px, px);
+    ctx.fillStyle = "#101436";
+    for (var r = 0; r < qr.size; r++) for (var c = 0; c < qr.size; c++) {
+      if (qr.m[r][c]) ctx.fillRect((c + QUIET) * scale, (r + QUIET) * scale, scale, scale);
+    }
+    return px;
+  }
+
+  // ---- Wiring ---------------------------------------------------
+  var toggle = document.querySelector(".qr__toggle");
+  var panel = document.getElementById("qr-panel");
+  var label = document.querySelector("[data-qr-label]");
+  var canvas = document.querySelector(".qr__canvas");
+  var download = document.querySelector(".qr__download");
+  if (!toggle || !panel || !canvas) return;
+
+  var qr = null;
+  function ensure() {
+    if (qr) return qr;
+    qr = encode(SHARE_URL);
+    var mods = qr.size + QUIET * 2;
+    var dpr = window.devicePixelRatio || 1;
+    var scale = Math.max(2, Math.floor((216 * dpr) / mods));
+    var px = paint(canvas, qr, scale);
+    canvas.style.width = (px / dpr) + "px";
+    canvas.style.height = (px / dpr) + "px";
+    return qr;
+  }
+
+  toggle.addEventListener("click", function () {
+    var open = toggle.getAttribute("aria-expanded") === "true";
+    if (!open) ensure();
+    toggle.setAttribute("aria-expanded", String(!open));
+    panel.hidden = open;
+    label.textContent = open ? "Show the QR code" : "Hide the QR code";
+  });
+
+  if (download) download.addEventListener("click", function () {
+    ensure();
+    var out = document.createElement("canvas");
+    var mods = qr.size + QUIET * 2;
+    paint(out, qr, Math.max(1, Math.round(1200 / mods)));
+    out.toBlob(function (blob) {
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = "course-101-atlanta-qr.png";
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+    }, "image/png");
+  });
+})();
+</script>
 </body>
 </html>
