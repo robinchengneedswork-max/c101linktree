@@ -27,8 +27,10 @@ Design decisions worth preserving:
   generic welcome. The lede immediately explains that this is chapter one of seven, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
   purpose. Don't "fix" the repetition.
-- **The chapter spine** is seven stacked 3:1 banners of Acts2's own illustrations, with
-  the label (number + official chapter title) and the week's question overlaid on each.
+- **The chapter spine** is seven stacked 4:1 banners of Acts2's own illustrations, each
+  with a number and that week's question overlaid — nothing else. The official chapter
+  titles ("A Good Thing Gone Bad" and so on) were deliberately dropped from the overlay;
+  the page shows the same seven questions as the business card and nothing more.
   Numbering is meaningful because the course is a progression; it isn't decoration. The
   images run green dawn → red → gold → night → desert → cliff → sunrise, which tracks
   the course's own arc, so keep them in order.
@@ -37,10 +39,9 @@ Design decisions worth preserving:
   overlaid text cannot trust the art underneath; the scrim is dark in both themes, which
   is why the text is `#FFFFFF` and the number `#F0B44A` rather than `var(--ink)` and
   `var(--saffron)`. Weakening the gradient breaks legibility on the pale chapters.
-- **`.chapter__art` has both `aspect-ratio: 3/1` and `min-height: 8.5rem`.** The
-  min-height is what stops overlaid text from crowding once the column is narrow — below
-  about 408px the ratio alone would give a shorter box than the text needs. Verified at a
-  381px content width: rows land at 136px, text needs 73px, every question on one line.
+- **`.chapter__art` has both `aspect-ratio: 4/1` and `min-height: 6.25rem`.** The
+  min-height is what stops the overlaid question from crowding once the column is narrow
+  enough to wrap it onto a second line. Keep both if you change the ratio.
 - **Every question on the page is set in Newsreader** — the hero and all seven chapter
   questions. That is the rule: a question looks like a question. Chapter titles and
   labels stay in Instrument Sans. Don't set a new question in the sans.
@@ -85,10 +86,12 @@ Webflow CDN behind course101.online and self-hosted here so the page does not de
 their bandwidth or file paths. **Reuse was confirmed with the user**, who is part of the
 Acts2 network.
 
-They were normalised on the way in: 1100×366 (3:1) `cover` crop, WebP q76, flattened
-onto white because several had alpha. That took the set from 811KB to 92KB.
+They were normalised on the way in: 1100×275 (4:1) `cover` crop, WebP q76, flattened
+onto white because several had alpha. That took the set from 811KB to 75KB. Re-cut them
+from the originals if the display ratio changes — do not rely on `object-fit` to reshape
+an already-cropped banner, or you get a blind centre crop of a crop.
 
-The originals are portrait-ish (0.95–1.67 aspect), so a 3:1 slice easily beheads the
+The originals are portrait-ish (0.95–1.67 aspect), so a 4:1 slice easily beheads the
 subject. The crop uses `sharp.strategy.attention` **except for ch1 and ch4**, which are
 pinned to `'centre'` — attention put ch1 on empty sky and lost its landscape entirely,
 and dropped the figure out of ch4. If you re-cut these, look at the output; a bad crop
@@ -137,8 +140,9 @@ together so the label still describes where the button goes.
 ## Facts that came from outside this repo
 
 These were read off the live sites, not invented, and should be re-checked before
-changing them: the seven chapter titles and the "8 languages" claim come from
-course101.online; the form is titled "2026 Course 101 Sign-Up".
+changing them: the "8 languages" claim comes from course101.online; the form is titled
+"2026 Course 101 Sign-Up". Rooted's links are `rootedchurchatlanta.org` and
+`instagram.com/rootedchurchatlanta`, both read off their own site.
 
 The seven per-chapter questions are drawn from the question list printed on the back of
 the business card, one per week. **Card and page are meant to match** — if the card's

@@ -228,14 +228,15 @@
     overflow: hidden;
   }
 
-  /* Acts2's own chapter illustrations, re-cut to 3:1. min-height keeps two
-     lines of overlaid text from crowding once the column gets narrow. */
+  /* Acts2's own chapter illustrations, re-cut to 4:1. min-height keeps the
+     overlaid question from crowding once the column gets narrow enough to
+     wrap it onto a second line. */
   .chapter__art {
     display: block;
     width: 100%;
     height: auto;
-    aspect-ratio: 3 / 1;
-    min-height: 8.5rem;
+    aspect-ratio: 4 / 1;
+    min-height: 6.25rem;
     object-fit: cover;
     background: var(--paper-lift);
   }
@@ -249,37 +250,19 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 0.9rem 1.05rem;
+    padding: 0.8rem 1rem;
     background: linear-gradient(to top,
-      rgb(16 20 54 / 0.84) 0%,
-      rgb(16 20 54 / 0.58) 45%,
-      rgb(16 20 54 / 0.04) 100%);
-  }
-
-  .chapter__label {
-    display: flex;
-    align-items: baseline;
-    gap: 0.5rem;
-    margin: 0 0 0.15rem;
-    font-size: 0.6875rem;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: rgb(255 255 255 / 0.78);
-  }
-
-  .chapter__num {
-    font-family: Newsreader, Georgia, serif;
-    font-size: 0.875rem;
-    font-weight: 400;
-    letter-spacing: 0;
-    color: #F0B44A;
-    font-variant-numeric: tabular-nums;
+      rgb(16 20 54 / 0.88) 0%,
+      rgb(16 20 54 / 0.46) 38%,
+      rgb(16 20 54 / 0) 74%);
   }
 
   /* Every question on this page is set in the serif — the hero and all seven
      chapters share one voice, so a question always looks like a question. */
   .chapter__q {
+    display: flex;
+    align-items: baseline;
+    gap: 0.55rem;
     margin: 0;
     font-family: Newsreader, Georgia, serif;
     font-size: clamp(1.05rem, 3.7vw, 1.375rem);
@@ -290,15 +273,31 @@
     text-wrap: balance;
   }
 
+  .chapter__num {
+    flex: none;
+    color: #F0B44A;
+    font-variant-numeric: tabular-nums;
+  }
+
   footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
     margin-top: 2.25rem;
     color: var(--ink-soft);
     font-size: 0.8125rem;
   }
 
-  footer p { margin: 0 0 0.35rem; }
-  footer p:last-child { margin: 0; }
-  footer a { color: inherit; text-underline-offset: 3px; }
+  footer a {
+    color: inherit;
+    text-underline-offset: 3px;
+    transition: color 0.18s ease;
+  }
+
+  @media (hover: hover) {
+    footer a:hover { color: var(--indigo); }
+  }
 
   /* ---- QR code ----------------------------------------------- */
 
@@ -463,57 +462,52 @@
       <li>
         <img class="chapter__art" src="images/ch1.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
         <div class="chapter__text">
-          <p class="chapter__label"><span class="chapter__num">1</span> What is Life?</p>
-          <p class="chapter__q">What is life really about?</p>
+          <p class="chapter__q"><span class="chapter__num">1</span><span>What is life really about?</span></p>
         </div>
       </li>
       <li>
         <img class="chapter__art" src="images/ch2.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
         <div class="chapter__text">
-          <p class="chapter__label"><span class="chapter__num">2</span> A Good Thing Gone Bad</p>
-          <p class="chapter__q">Why is the world so broken?</p>
+          <p class="chapter__q"><span class="chapter__num">2</span><span>Why is the world so broken?</span></p>
         </div>
       </li>
       <li>
         <img class="chapter__art" src="images/ch3.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
         <div class="chapter__text">
-          <p class="chapter__label"><span class="chapter__num">3</span> God's Revelation</p>
-          <p class="chapter__q">How does God reveal himself?</p>
+          <p class="chapter__q"><span class="chapter__num">3</span><span>How does God reveal himself?</span></p>
         </div>
       </li>
       <li>
         <img class="chapter__art" src="images/ch4.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
         <div class="chapter__text">
-          <p class="chapter__label"><span class="chapter__num">4</span> Our Problem</p>
-          <p class="chapter__q">What is sin, really?</p>
+          <p class="chapter__q"><span class="chapter__num">4</span><span>What is sin, really?</span></p>
         </div>
       </li>
       <li>
         <img class="chapter__art" src="images/ch5.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
         <div class="chapter__text">
-          <p class="chapter__label"><span class="chapter__num">5</span> Death and Resurrection of Jesus</p>
-          <p class="chapter__q">Did Jesus really rise from the dead?</p>
+          <p class="chapter__q"><span class="chapter__num">5</span><span>Did Jesus really rise from the dead?</span></p>
         </div>
       </li>
       <li>
         <img class="chapter__art" src="images/ch6.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
         <div class="chapter__text">
-          <p class="chapter__label"><span class="chapter__num">6</span> Our Response</p>
-          <p class="chapter__q">What does the resurrection mean for us?</p>
+          <p class="chapter__q"><span class="chapter__num">6</span><span>What does the resurrection mean for us?</span></p>
         </div>
       </li>
       <li>
         <img class="chapter__art" src="images/ch7.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
         <div class="chapter__text">
-          <p class="chapter__label"><span class="chapter__num">7</span> New Life of Love</p>
-          <p class="chapter__q">Who am I, and why am I here?</p>
+          <p class="chapter__q"><span class="chapter__num">7</span><span>Who am I, and why am I here?</span></p>
         </div>
       </li>
     </ol>
   </section>
 
   <footer class="rise">
-    <p>Course 101 is an Acts2 Network course. Hosted in Atlanta by Rooted Church.</p>
+    <a href="https://www.rootedchurchatlanta.org/">rootedchurchatlanta.org</a>
+    <span aria-hidden="true">·</span>
+    <a href="https://www.instagram.com/rootedchurchatlanta/">@rootedchurchatlanta</a>
   </footer>
 
 </main>
