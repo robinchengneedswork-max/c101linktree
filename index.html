@@ -214,8 +214,7 @@
 
   .spine ol {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(8.5rem, 1fr));
-    gap: 1rem 0.75rem;
+    gap: 1.85rem;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -224,39 +223,50 @@
 
   .spine li { counter-increment: chapter; }
 
-  /* Acts2's own chapter illustrations. Flattened onto white when they were
-     converted, so the tiles read the same in light and dark. */
-  .spine img {
-    display: block;
-    width: 100%;
-    height: auto;
-    aspect-ratio: 1;
-    object-fit: cover;
-    border-radius: 0.5rem;
-    background: var(--paper-lift);
+  .chapter__label {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    margin: 0;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
   }
 
-  .spine__meta {
-    display: grid;
-    grid-template-columns: 0.9rem 1fr;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
-  }
-
-  .spine__meta::before {
-    content: counter(chapter);
+  .chapter__num {
     font-family: Newsreader, Georgia, serif;
-    font-size: 0.9375rem;
-    line-height: 1.25;
+    font-size: 0.875rem;
+    font-weight: 400;
+    letter-spacing: 0;
     color: var(--saffron);
     font-variant-numeric: tabular-nums;
   }
 
-  .spine__title {
-    font-size: 0.8125rem;
-    line-height: 1.25;
+  /* Every question on this page is set in the serif — the hero and all seven
+     chapters share one voice, so a question always looks like a question. */
+  .chapter__q {
+    margin: 0.3rem 0 0.75rem;
+    font-family: Newsreader, Georgia, serif;
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
     color: var(--ink);
     text-wrap: balance;
+  }
+
+  /* Acts2's own chapter illustrations, re-cut to 3:1. Flattened onto white
+     when converted, so the banners read the same in light and dark. */
+  .chapter__art {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 3 / 1;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    background: var(--paper-lift);
   }
 
   footer {
@@ -430,32 +440,39 @@
     <h2 class="spine__label" id="spine-label">Seven weeks, seven chapters</h2>
     <ol>
       <li>
-        <img src="images/ch1.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
-        <span class="spine__meta"><span class="spine__title">What is Life?</span></span>
+        <p class="chapter__label"><span class="chapter__num">1</span> What is Life?</p>
+        <p class="chapter__q">What is life really about?</p>
+        <img class="chapter__art" src="images/ch1.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
       </li>
       <li>
-        <img src="images/ch2.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
-        <span class="spine__meta"><span class="spine__title">A Good Thing Gone Bad</span></span>
+        <p class="chapter__label"><span class="chapter__num">2</span> A Good Thing Gone Bad</p>
+        <p class="chapter__q">Why is the world so broken?</p>
+        <img class="chapter__art" src="images/ch2.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
       </li>
       <li>
-        <img src="images/ch3.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
-        <span class="spine__meta"><span class="spine__title">God's Revelation</span></span>
+        <p class="chapter__label"><span class="chapter__num">3</span> God's Revelation</p>
+        <p class="chapter__q">How does God reveal himself?</p>
+        <img class="chapter__art" src="images/ch3.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
       </li>
       <li>
-        <img src="images/ch4.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
-        <span class="spine__meta"><span class="spine__title">Our Problem</span></span>
+        <p class="chapter__label"><span class="chapter__num">4</span> Our Problem</p>
+        <p class="chapter__q">What is sin, really?</p>
+        <img class="chapter__art" src="images/ch4.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
       </li>
       <li>
-        <img src="images/ch5.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
-        <span class="spine__meta"><span class="spine__title">Death and Resurrection of Jesus</span></span>
+        <p class="chapter__label"><span class="chapter__num">5</span> Death and Resurrection of Jesus</p>
+        <p class="chapter__q">Did Jesus really rise from the dead?</p>
+        <img class="chapter__art" src="images/ch5.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
       </li>
       <li>
-        <img src="images/ch6.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
-        <span class="spine__meta"><span class="spine__title">Our Response</span></span>
+        <p class="chapter__label"><span class="chapter__num">6</span> Our Response</p>
+        <p class="chapter__q">What does the resurrection mean for us?</p>
+        <img class="chapter__art" src="images/ch6.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
       </li>
       <li>
-        <img src="images/ch7.webp" alt="" width="400" height="400" loading="lazy" decoding="async">
-        <span class="spine__meta"><span class="spine__title">New Life of Love</span></span>
+        <p class="chapter__label"><span class="chapter__num">7</span> New Life of Love</p>
+        <p class="chapter__q">Who am I, and why am I here?</p>
+        <img class="chapter__art" src="images/ch7.webp" alt="" width="1100" height="366" loading="lazy" decoding="async">
       </li>
     </ol>
   </section>

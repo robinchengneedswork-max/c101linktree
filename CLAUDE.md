@@ -27,10 +27,14 @@ Design decisions worth preserving:
   generic welcome. The lede immediately explains that this is chapter one of seven, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
   purpose. Don't "fix" the repetition.
-- **The chapter spine** shows all seven real chapters as a grid of Acts2's own
-  illustrations. Numbering is meaningful here because the course is a progression; it
-  isn't decoration. The images run teal dawn → red → dark → sunrise across the seven,
-  which tracks the course's own arc — keep them in order.
+- **The chapter spine** is seven stacked rows, each one a label (number + official
+  chapter title), the week's question, and a 3:1 banner of Acts2's own illustration.
+  Numbering is meaningful because the course is a progression; it isn't decoration. The
+  images run green dawn → red → gold → night → desert → cliff → sunrise, which tracks
+  the course's own arc, so keep them in order.
+- **Every question on the page is set in Newsreader** — the hero and all seven chapter
+  questions. That is the rule: a question looks like a question. Chapter titles and
+  labels stay in Instrument Sans. Don't set a new question in the sans.
 - Colors and spacing come from CSS custom properties on `:root`, with a dark variant
   under `@media (prefers-color-scheme: dark)`. Change a color by editing the token, not
   the rule that uses it. Saffron (`--saffron`) is reserved for the hero "?", the chapter
@@ -72,12 +76,15 @@ Webflow CDN behind course101.online and self-hosted here so the page does not de
 their bandwidth or file paths. **Reuse was confirmed with the user**, who is part of the
 Acts2 network.
 
-They were normalised on the way in: square `cover` crop (the originals run 0.95–1.67
-aspect), 400×400, WebP q78, and flattened onto white because several had alpha. That
-took the set from 811KB to 51KB. To regenerate after replacing a source file, the
-recipe is `sharp(src).resize(400, 400, {fit:'cover'}).flatten({background:'#FFFFFF'})
-.webp({quality:78})` — and SVG sources need `{density: 300}` on input or they rasterize
-soft.
+They were normalised on the way in: 1100×366 (3:1) `cover` crop, WebP q76, flattened
+onto white because several had alpha. That took the set from 811KB to 92KB.
+
+The originals are portrait-ish (0.95–1.67 aspect), so a 3:1 slice easily beheads the
+subject. The crop uses `sharp.strategy.attention` **except for ch1 and ch4**, which are
+pinned to `'centre'` — attention put ch1 on empty sky and lost its landscape entirely,
+and dropped the figure out of ch4. If you re-cut these, look at the output; a bad crop
+is not obvious from the file size alone. SVG sources need `{density: 400}` on input or
+they rasterize soft.
 
 ## Palette provenance
 
@@ -123,6 +130,10 @@ together so the label still describes where the button goes.
 These were read off the live sites, not invented, and should be re-checked before
 changing them: the seven chapter titles and the "8 languages" claim come from
 course101.online; the form is titled "2026 Course 101 Sign-Up".
+
+The seven per-chapter questions are drawn from the question list printed on the back of
+the business card, one per week. **Card and page are meant to match** — if the card's
+list changes, change these too, and vice versa.
 
 Do **not** point people to the contact form on course101.online. Rooted Church does not
 run that site and cannot see what arrives there, so questions sent that way go
