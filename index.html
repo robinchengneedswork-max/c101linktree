@@ -17,7 +17,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300..600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Instrument+Sans:wght@400;500;600&family=Newsreader:opsz,wght@6..72,300..600&display=swap" rel="stylesheet">
 
 <style>
   :root {
@@ -72,8 +72,32 @@
 
   /* ---- Hero -------------------------------------------------- */
 
-  .eyebrow {
+  /* Masthead: the C101 wordmark from the printed cards, locked up with the
+     local host. Anton is the same face the cards set "C101" in. */
+  .masthead {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
     margin: 0 0 clamp(1.75rem, 6vh, 3rem);
+  }
+
+  .wordmark {
+    font-family: Anton, "Arial Narrow", Impact, sans-serif;
+    font-size: 1.45rem;
+    line-height: 1;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+  }
+
+  .masthead__rule {
+    flex: none;
+    width: 1px;
+    height: 1.05rem;
+    background: var(--rule);
+  }
+
+  .eyebrow {
+    margin: 0;
     font-size: 0.6875rem;
     font-weight: 600;
     letter-spacing: 0.16em;
@@ -324,7 +348,11 @@
 <body>
 <main>
 
-  <p class="eyebrow rise">Rooted Church <span>·</span> Atlanta</p>
+  <header class="masthead rise">
+    <span class="wordmark">C101</span>
+    <span class="masthead__rule" aria-hidden="true"></span>
+    <p class="eyebrow">Rooted Church <span>·</span> Atlanta</p>
+  </header>
 
   <h1 class="question rise">What is life<span class="mark">?</span></h1>
 

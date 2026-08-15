@@ -20,6 +20,9 @@ that way unless a second page is genuinely needed — the deploy story depends o
 
 Design decisions worth preserving:
 
+- **The masthead sets "C101" in Anton**, which is the same face the printed business
+  cards use for that wordmark and the display face on rootedchurchatlanta.org. It is a
+  logo lockup, so keep it small — the hero question is the thing meant to be read first.
 - **The hero is the course's first chapter title, "What is life?"** — not a logo or a
   generic welcome. The lede immediately explains that this is chapter one of seven, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
@@ -59,6 +62,22 @@ RGBA and decode it with the `jsqr` npm package, asserting the text comes back
 unchanged. Note that comparing against another encoder's matrix is a *weaker* test —
 implementations legitimately disagree on mask selection when penalty scores tie, and
 any valid mask scans fine.
+
+## Palette provenance
+
+The indigo (`--indigo #3B34A6`) and saffron (`--saffron #E39A1F`) were invented for this
+page; they do not come from either parent brand. This was raised with the user, who
+chose to keep them. Do not "correct" them toward a parent palette without asking.
+
+For reference, the two parent brands and their real values:
+
+- **Rooted Church** — `#00171F`, `#003459`, `#007EA7`, `#00A8E8`. Type: Anton + Epilogue.
+- **Course 101 (Acts2)** — `#173E43` deep teal, `#679B88` sage, `#C1B6A9` warm sand.
+  Signature device: wide-tracked uppercase section labels, which this page echoes in
+  `.eyebrow` and `.spine__label`.
+
+Note `#679B88` on white is about 2.6:1 — it fails WCAG for text despite Acts2 using it
+that way on their primary button.
 
 ## Commands
 
