@@ -4,8 +4,9 @@ A one-page link hub for Course 101 (Acts2 Network), Atlanta. It routes visitors
 arriving from a QR code, flyer, or Instagram bio to one of two places:
 
 - **Sign up for 2026** → the Google Form
-- **Explore the course** → opens the seven chapters in place, each linking to its
-  page on [course101.online](https://www.course101.online/)
+- **Explore the course** → the five weeks and the epilogue, shown in place (open by
+  default), each linking to its page on
+  [course101.online](https://www.course101.online/)
 
 It also generates a QR code for its own address, so you can pull a print-ready PNG
 for flyers without leaving the page.
@@ -30,7 +31,7 @@ Vercel serves `index.html` from the repo root with zero configuration.
 ## Changing the links
 
 Everything lives in the `<nav class="links">` block in `index.html`: the sign-up
-link, the explore disclosure, and the seven chapter links inside it. When changing
+link, the explore disclosure, and the six chapter links inside it. When changing
 a destination, update the `href`, the `.link__title`, and the `.link__meta` line
 together so the label still describes where the control goes. Chapter links also
 carry an `aria-label` that must match their visible question.

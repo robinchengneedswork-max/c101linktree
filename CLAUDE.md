@@ -5,7 +5,10 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## What this is
 
 A single-page link hub ("linktree") for Course 101 in Atlanta, run by Acts2 Network.
-Course 101 is a 7-week course on the intellectual foundations of Christianity.
+Course 101 is a 5-week course on the intellectual foundations of Christianity.
+(It was seven weeks until the 10.07.2025 edition of the course book condensed it
+to five — `c101-5wk_text_20251007.pdf`. Anything on the page still counting to
+seven is a leftover, not a decision.)
 Visitors arrive from a QR code, flyer, or social bio, and the page's only job is to
 route them to one of two destinations:
 
@@ -35,39 +38,56 @@ Design decisions worth preserving:
 - **The divider is a saffron dot, not a rule.** It echoes the hero's `?` and is the one
   spot of brand colour in the lockup.
 - **The hero is the course's first chapter title, "What is life?"** — not a logo or a
-  generic welcome. The lede immediately explains that this is chapter one of seven, so
+  generic welcome. The lede immediately explains that this is chapter one of five, so
   the headline and the chapter spine at the bottom are the same fact stated twice on
   purpose. Don't "fix" the repetition.
 - **The two controls are not the same kind of thing.** "Sign up for 2026" is an `<a>`
-  that leaves the page. "Explore the course" is a `<button>` that opens the chapters in
+  that leaves the page. "Explore the course" is a `<button>` that toggles the chapters in
   place — hence `button.link`, which resets UA button styling so it sits flush with its
   sibling card, and the chevron rather than the outbound arrow. The `.link:hover svg`
   rule is scoped `:not(.link__chevron)` so the arrow's nudge doesn't fight the chevron's
   rotation.
+- **The disclosure starts open**, with `aria-expanded="true"` and no `hidden` attribute
+  in the markup — five banners are short enough to show on arrival, and the JS only ever
+  toggles from whatever the markup says, so the list also survives JavaScript being off.
 - **The chapters live inside the links `<nav>`**, not in a section of their own, so they
-  open directly under the control that reveals them. Each is a link to
-  `course101.online/chapter-N/en` (the `/en` suffix is the English variant; the site has
-  eight). There is no "seven weeks, seven chapters" heading — the disclosure's own label
-  does that job.
+  sit directly under the control that toggles them. There is no "five weeks, five
+  chapters" heading — the disclosure's own label does that job.
+- **Week number and destination chapter number do not line up, on purpose.**
+  course101.online still hosts the seven-chapter edition, so the five weeks link to the
+  nearest matching page: weeks 1–3 to `chapter-1/2/3`, week 4 to `chapter-4` (the book's
+  "Our Predicament & God's Solution" covers the site's chapters 4 *and* 5), week 5 to
+  `chapter-6` ("Our Response"), epilogue to `chapter-7`. Each banner shows the art
+  belonging to the page it opens, which is why `ch5.webp` is currently unused — keep art
+  and href together if you re-map these. If Acts2 republishes the site as five chapters,
+  this whole mapping collapses back to 1:1.
+- **The sixth row is the epilogue, and it is labelled rather than numbered.** "New Life
+  of Love" closes the book after the five weeks; a sixth numeral would read as a sixth
+  week, so it takes `.chapter__label` — the `.eyebrow` voice, wide-tracked caps in
+  Instrument Sans — where the others take `.chapter__num`. It is the one row whose
+  leading item is not in the serif, and it is deliberately smaller than the question
+  beside it so it reads as a tag. Its question, "So what is life, after all?", re-asks
+  the hero's on purpose: that is exactly what the epilogue's own first page does.
 - **Each chapter banner** is 4:1, Acts2's illustration with a number and that week's
   question overlaid — nothing else. The official chapter titles ("A Good Thing Gone Bad"
   and so on) were deliberately dropped. Numbering is meaningful because the course is a
-  progression; it isn't decoration. The images run green dawn → red → gold → night →
-  desert → cliff → sunrise, tracking the course's own arc, so keep them in order.
-- **Each chapter link carries an explicit `aria-label`** ("Chapter 1: What is life
+  progression; it isn't decoration. The full set runs green dawn → red → gold → night →
+  desert → cliff → sunrise, tracking the course's own arc, so keep whichever are in use
+  in that order.
+- **Each chapter link carries an explicit `aria-label`** ("Week 1: What is life
   really about?"). Without it the accessible name comes out as `1What is life really
   about?` — the number and question are separate flex items, so they concatenate with no
   space. Keep the label in sync with the visible question if you change one.
 - **`.chapter__text` carries a dark scrim, and its colours are literal, not tokens.**
-  The seven illustrations range from near-white (ch5, ch6) to near-black (ch4), so
+  The illustrations range from near-white (ch5, ch6) to near-black (ch4), so
   overlaid text cannot trust the art underneath; the scrim is dark in both themes, which
   is why the text is `#FFFFFF` and the number `#F0B44A` rather than `var(--ink)` and
   `var(--saffron)`. Weakening the gradient breaks legibility on the pale chapters.
 - **`.chapter__art` has both `aspect-ratio: 4/1` and `min-height: 6.25rem`.** The
   min-height is what stops the overlaid question from crowding once the column is narrow
   enough to wrap it onto a second line. Keep both if you change the ratio.
-- **Every question on the page is set in Newsreader** — the hero and all seven chapter
-  questions. That is the rule: a question looks like a question. Chapter titles and
+- **Every question on the page is set in Newsreader** — the hero, the five weekly
+  questions, and the epilogue's. That is the rule: a question looks like a question. Chapter titles and
   labels stay in Instrument Sans. Don't set a new question in the sans.
 - Colors and spacing come from CSS custom properties on `:root`, with a dark variant
   under `@media (prefers-color-scheme: dark)`. Change a color by editing the token, not
@@ -81,8 +101,9 @@ Design decisions worth preserving:
 ## The sticky sign-up bar
 
 `.stickybar` carries the CTA back into reach once the hero has scrolled away. With the
-chapters open, the real sign-up button ends up well over a thousand pixels above someone
-who has just read the seventh question — the point at which they are most likely to act.
+chapters open — which is now the default — the real sign-up button sits well above
+someone who has just read the fifth question, the point at which they are most likely to
+act.
 
 - **`position: fixed`, not `sticky`.** A sticky element occupies flow and would also show
   at the top of the page. This must stay out of the way until the hero leaves.
@@ -124,7 +145,9 @@ any valid mask scans fine.
 
 ## Chapter images
 
-`images/ch1.webp` … `ch7.webp` are Acts2's chapter illustrations, pulled from the
+`images/ch1.webp` … `ch7.webp` are Acts2's chapter illustrations for the *seven*-chapter
+edition still on course101.online — the page currently uses 1, 2, 3, 4, 6, and 7. They were
+pulled from the
 Webflow CDN behind course101.online and self-hosted here so the page does not depend on
 their bandwidth or file paths. **Reuse was confirmed with the user**, who is part of the
 Acts2 network.
@@ -185,11 +208,17 @@ together so the label still describes where the button goes.
 These were read off the live sites, not invented, and should be re-checked before
 changing them: the "8 languages" claim comes from course101.online; the form is titled
 "2026 Course 101 Sign-Up". Rooted's links are `rootedchurchatlanta.org` and
-`instagram.com/rootedchurchatlanta`, both read off their own site.
+`instagram.com/rootedchurchatlanta`, both read off their own site. Note that
+course101.online still describes Course 101 as a 7-week course; this page follows the
+5-week book instead.
 
-The seven per-chapter questions are drawn from the question list printed on the back of
-the business card, one per week. **Card and page are meant to match** — if the card's
-list changes, change these too, and vice versa.
+The per-week questions were drawn from the question list printed on the back of the
+business card, one per week — but that card was printed for the seven-week course.
+Weeks 1–3 keep their card questions; weeks 4 ("What has God done about it?"), 5 ("How
+do I respond?") and the epilogue ("So what is life, after all?") were written here to
+cover the book's condensed chapters 4 and 5, which absorb what were four separate weeks.
+**Card and page are meant to match** — the card needs a reprint, and if its list
+changes, change these too.
 
 Do **not** point people to the contact form on course101.online. Rooted Church does not
 run that site and cannot see what arrives there, so questions sent that way go

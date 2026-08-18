@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Course 101 — Atlanta 2026</title>
-<meta name="description" content="A 7-week course on the intellectual foundations of Christianity, and a room to ask the questions out loud. Sign up for the 2026 Atlanta cohort.">
+<meta name="description" content="A 5-week course on the intellectual foundations of Christianity, and a room to ask the questions out loud. Sign up for the 2026 Atlanta cohort.">
 <meta name="theme-color" content="#EDF0F7" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0D1030" media="(prefers-color-scheme: dark)">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Course 101 — Atlanta 2026">
-<meta property="og:description" content="Seven weeks on the intellectual foundations of Christianity. Sign up for 2026, or read the course first.">
+<meta property="og:description" content="Five weeks on the intellectual foundations of Christianity. Sign up for 2026, or read the course first.">
 <meta name="twitter:card" content="summary">
 
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23101436'/%3E%3Ctext x='16' y='23' font-family='Georgia,serif' font-size='21' font-weight='600' fill='%23E39A1F' text-anchor='middle'%3E%3F%3C/text%3E%3C/svg%3E">
@@ -76,8 +76,8 @@
 
   /* Fixed rather than sticky: a sticky element would occupy flow and show at
      the top of the page too. This must stay out of the way until the hero has
-     scrolled off, then carry the sign-up back into reach — by the seventh
-     chapter banner the real button is well over a thousand pixels up.
+     scrolled off, then carry the sign-up back into reach — by the fifth
+     chapter banner the real button is several hundred pixels up.
      visibility (not just transform) keeps the links out of the tab order
      while hidden. */
   .stickybar {
@@ -330,7 +330,7 @@
     .chapter:hover .chapter__art { transform: scale(1.035); }
   }
 
-  /* The seven illustrations run from near-white to near-black, so overlaid
+  /* The illustrations run from near-white to near-black, so overlaid
      text gets its own ground instead of trusting the art underneath. The
      scrim is dark in both themes — hence the literal colours below. */
   .chapter__text {
@@ -346,8 +346,8 @@
       rgb(16 20 54 / 0) 74%);
   }
 
-  /* Every question on this page is set in the serif — the hero and all seven
-     chapters share one voice, so a question always looks like a question. */
+  /* Every question on this page is set in the serif — the hero and all five
+     weeks share one voice, so a question always looks like a question. */
   .chapter__q {
     display: flex;
     align-items: baseline;
@@ -366,6 +366,20 @@
     flex: none;
     color: #F0B44A;
     font-variant-numeric: tabular-nums;
+  }
+
+  /* The epilogue takes the number's place in the row but isn't a week, so it
+     gets the label voice — Instrument Sans, wide-tracked caps, the same treatment
+     as .eyebrow — rather than a sixth numeral. Optically smaller than the serif
+     it sits beside, so it reads as a tag and not as part of the question. */
+  .chapter__label {
+    flex: none;
+    color: #F0B44A;
+    font-family: "Instrument Sans", ui-sans-serif, system-ui, sans-serif;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
   }
 
   footer {
@@ -505,7 +519,7 @@
   <h1 class="question rise">What is life<span class="mark">?</span></h1>
 
   <p class="lede rise">
-    That's chapter one of seven. Course 101 is a <strong>7-week course</strong> on the
+    That's chapter one of five. Course 101 is a <strong>5-week course</strong> on the
     intellectual foundations of Christianity — and a room to ask the questions out loud,
     whether you've believed for years or you're just curious.
   </p>
@@ -524,10 +538,10 @@
     </a>
 
     <button class="link link--secondary" type="button"
-            aria-expanded="false" aria-controls="chapters">
+            aria-expanded="true" aria-controls="chapters">
       <span>
         <span class="link__title">Explore the course</span>
-        <span class="link__meta">Seven chapters · course101.online</span>
+        <span class="link__meta">Five weeks · course101.online</span>
       </span>
       <svg class="link__chevron" width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
         <path d="M4.5 7 9 11.5 13.5 7" stroke="currentColor" stroke-width="1.6"
@@ -535,11 +549,16 @@
       </svg>
     </button>
 
-    <div class="chapters" id="chapters" hidden>
+    <!-- Five weeks and the epilogue, following the 5-week edition of the course
+         book. The hrefs are the closest matching pages on course101.online, which
+         still hosts the older seven-chapter edition: week 4 gathers that site's
+         chapters 4 and 5, week 5 is its chapter 6, and the epilogue its chapter 7.
+         Each banner shows the art of the page it actually opens. -->
+    <div class="chapters" id="chapters">
       <ol>
         <li>
           <a class="chapter" href="https://www.course101.online/chapter-1/en"
-             aria-label="Chapter 1: What is life really about?">
+             aria-label="Week 1: What is life really about?">
             <img class="chapter__art" src="images/ch1.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
             <span class="chapter__text">
               <span class="chapter__q"><span class="chapter__num">1</span><span>What is life really about?</span></span>
@@ -548,7 +567,7 @@
         </li>
         <li>
           <a class="chapter" href="https://www.course101.online/chapter-2/en"
-             aria-label="Chapter 2: Why is the world so broken?">
+             aria-label="Week 2: Why is the world so broken?">
             <img class="chapter__art" src="images/ch2.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
             <span class="chapter__text">
               <span class="chapter__q"><span class="chapter__num">2</span><span>Why is the world so broken?</span></span>
@@ -557,7 +576,7 @@
         </li>
         <li>
           <a class="chapter" href="https://www.course101.online/chapter-3/en"
-             aria-label="Chapter 3: How does God reveal himself?">
+             aria-label="Week 3: How does God reveal himself?">
             <img class="chapter__art" src="images/ch3.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
             <span class="chapter__text">
               <span class="chapter__q"><span class="chapter__num">3</span><span>How does God reveal himself?</span></span>
@@ -566,37 +585,32 @@
         </li>
         <li>
           <a class="chapter" href="https://www.course101.online/chapter-4/en"
-             aria-label="Chapter 4: What is sin, really?">
+             aria-label="Week 4: What has God done about it?">
             <img class="chapter__art" src="images/ch4.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
             <span class="chapter__text">
-              <span class="chapter__q"><span class="chapter__num">4</span><span>What is sin, really?</span></span>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a class="chapter" href="https://www.course101.online/chapter-5/en"
-             aria-label="Chapter 5: Did Jesus really rise from the dead?">
-            <img class="chapter__art" src="images/ch5.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
-            <span class="chapter__text">
-              <span class="chapter__q"><span class="chapter__num">5</span><span>Did Jesus really rise from the dead?</span></span>
+              <span class="chapter__q"><span class="chapter__num">4</span><span>What has God done about it?</span></span>
             </span>
           </a>
         </li>
         <li>
           <a class="chapter" href="https://www.course101.online/chapter-6/en"
-             aria-label="Chapter 6: What does the resurrection mean for us?">
+             aria-label="Week 5: How do I respond?">
             <img class="chapter__art" src="images/ch6.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
             <span class="chapter__text">
-              <span class="chapter__q"><span class="chapter__num">6</span><span>What does the resurrection mean for us?</span></span>
+              <span class="chapter__q"><span class="chapter__num">5</span><span>How do I respond?</span></span>
             </span>
           </a>
         </li>
+        <!-- "New Life of Love" closes the book after the five weeks, so it is
+             labelled rather than numbered — a sixth numeral would read as a
+             sixth week. Its question deliberately re-asks the hero's, which is
+             what the epilogue itself does on its first page. -->
         <li>
           <a class="chapter" href="https://www.course101.online/chapter-7/en"
-             aria-label="Chapter 7: Who am I, and why am I here?">
+             aria-label="Epilogue: So what is life, after all?">
             <img class="chapter__art" src="images/ch7.webp" alt="" width="1100" height="275" loading="lazy" decoding="async">
             <span class="chapter__text">
-              <span class="chapter__q"><span class="chapter__num">7</span><span>Who am I, and why am I here?</span></span>
+              <span class="chapter__q"><span class="chapter__label">Epilogue</span><span>So what is life, after all?</span></span>
             </span>
           </a>
         </li>
@@ -650,7 +664,10 @@
 
 <script>
 /* Explore-the-course disclosure. The chapters live inside the links nav so
-   they open in place, directly under the control that reveals them. */
+   they sit in place, directly under the control that toggles them. It starts
+   open — the markup carries aria-expanded="true" and no hidden attribute — so
+   the five weeks are visible on arrival and the control collapses them. That
+   also means the list is readable with JavaScript off. */
 (function () {
   "use strict";
   var toggle = document.querySelector('[aria-controls="chapters"]');
